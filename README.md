@@ -1,8 +1,3 @@
-Here’s a polished README for your repo **Orbit‑Chatbot** — you can copy this into your `README.md` and tweak names, links or screenshots as needed:
-
----
-
-````markdown
 # Orbit-Chatbot 🚀  
 A lightweight web chatbot powered by Google’s Generative Language API.
 
@@ -75,6 +70,7 @@ Created by [@arpittak027](https://github.com/arpittak027).
 If you build something cool with this, I’d love to hear about it!
 
 ```
+
 
 
 
