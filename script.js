@@ -39,7 +39,7 @@ const typingEffect = (text, textElement, botMsgDiv) => {
       botMsgDiv.classList.remove("loading");
       document.body.classList.remove("bot-responding");
     }
-  }, 40); // 40 ms delay
+  }, 10 ms); // 10ms delay
 };
 // Make the API call and generate the bot's response
 const generateResponse = async (botMsgDiv) => {
