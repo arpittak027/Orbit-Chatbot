@@ -76,9 +76,6 @@ If you build something cool with this, I’d love to hear about it!
 
 ```
 
----
 
-If you like, I can include **badge links** (e.g., build status, license, GitHub stars) and **a screenshot of the chat UI** in the README to make it look even more professional. Would you like me to add that?
-::contentReference[oaicite:1]{index=1}
-```
+
 
