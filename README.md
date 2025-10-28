@@ -1,4 +1,4 @@
-# Orbit-Chatbot 🚀  
+# Orbit-Chatbot 🤖
 A lightweight web chatbot powered by Google’s Generative Language API.
 
 ## 🔍 Overview  
@@ -70,6 +70,7 @@ Created by [@arpittak027](https://github.com/arpittak027).
 If you build something cool with this, I’d love to hear about it!
 
 ```
+
 
 
 
