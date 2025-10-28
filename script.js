@@ -1,16 +1,31 @@
-const container = document.querySelector(".container");
-const chatsContainer = document.querySelector(".chats-container");
-const promptForm = document.querySelector(".prompt-form");
-const promptInput = promptForm.querySelector(".prompt-input");
-const fileInput = promptForm.querySelector("#file-input");
-const fileUploadWrapper = promptForm.querySelector(".file-upload-wrapper");
-const themeToggleBtn = document.querySelector("#theme-toggle-btn");
 // API Setup
-const API_KEY = "AIzaSyB2Y4FDiANLPPC_G9BJrrSwKX-5dr3h7zI";
-const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
+// Load .env (Node environment). In browser builds you should NOT expose the key — instead call your server.
+try {
+  // This will work in Node (dev) if dotenv is installed. In browsers `require` is not defined and will throw.
+  require("dotenv").config();
+} catch (e) {
+  // ignore in browser environments
+}
+// Prefer to keep the API key server-side. For local/dev, set GOOGLE_API_KEY in a .env file.
+const API_KEY = (typeof process !== "undefined" && process.env && process.env.GOOGLE_API_KEY) ? process.env.GOOGLE_API_KEY : "AIzaSyB2Y4FDiANLPPC_G9BJrrSwKX-5dr3h7zI";
+const API_URL_BASE = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
 let controller, typingInterval;
 const chatHistory = [];
 const userData = { message: "", file: {} };
+// Wait for DOM to be ready before querying elements and attaching event handlers
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.querySelector(".container");
+  const chatsContainer = document.querySelector(".chats-container");
+  const promptForm = document.querySelector(".prompt-form");
+  const promptInput = promptForm ? promptForm.querySelector(".prompt-input") : null;
+  const fileInput = promptForm ? promptForm.querySelector("#file-input") : null;
+  const fileUploadWrapper = promptForm ? promptForm.querySelector(".file-upload-wrapper") : null;
+  const themeToggleBtn = document.querySelector("#theme-toggle-btn");
+
+  if (!promptForm || !promptInput || !chatsContainer || !container) {
+    console.error("Orbit Chatbot: required DOM elements are missing. Initialization aborted.");
+    return;
+  }
 // Set initial theme from local storage
 const isLightTheme = localStorage.getItem("themeColor") === "light_mode";
 document.body.classList.toggle("light-theme", isLightTheme);
@@ -39,7 +54,7 @@ const typingEffect = (text, textElement, botMsgDiv) => {
       botMsgDiv.classList.remove("loading");
       document.body.classList.remove("bot-responding");
     }
-  }, 10 ms); // 10ms delay
+  }, 10); // 10 ms delay
 };
 // Make the API call and generate the bot's response
 const generateResponse = async (botMsgDiv) => {
@@ -52,7 +67,8 @@ const generateResponse = async (botMsgDiv) => {
   });
   try {
     // Send the chat history to the API to get a response
-    const response = await fetch(API_URL, {
+  const url = `${API_URL_BASE}?key=${API_KEY}`;
+  const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ contents: chatHistory }),
@@ -158,3 +174,4 @@ document.addEventListener("click", ({ target }) => {
 // Add event listeners for form submission and file input click
 promptForm.addEventListener("submit", handleFormSubmit);
 promptForm.querySelector("#add-file-btn").addEventListener("click", () => fileInput.click());
+});
